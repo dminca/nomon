@@ -41,33 +41,46 @@ router.get('/newstudent', function(req,res){
   res.render('newstudent', {title: 'Add student'});
 });
 
-router.post('/addstudent', function(req,res){
-  var MongoClient = db.MongoClient;
+router.post('/addstudent', function(req, res){
 
-  var url = 'mongodb://localhost:27017/nomon';
+    // Get a Mongo client to work with the Mongo server
+    var MongoClient = mongodb.MongoClient;
 
-  MongoClient.connect(url, function(err, db){
-    if(err){
-      console.log("Unable to connect to server", err);
-    } else {
-      console.log("Connected to server");
+    // Define where the MongoDB server is
+    var url = 'mongodb://localhost:27017/sampsite';
 
-      var collections = db.collection('students');
+    // Connect to the server
+    MongoClient.connect(url, function(err, db){
+      if (err) {
+        console.log('Unable to connect to the Server:', err);
+      } else {
+        console.log('Connected to Server');
 
-      var student1 = {student: req.body.student, age: req.body.age,
-                        sex: req.body.sex};
+        // Get the documents collection
+        var collection = db.collection('students');
 
-      collection.insert([student1], function(err, result){
-        if(err){
-          console.log(err);
-        } else {
-          res.redirect("thelist");
-        }
+        // Get the student data passed from the form
+        var student1 = {student: req.body.student, street: req.body.street,
+          city: req.body.city, state: req.body.state, sex: req.body.sex,
+          gpa: req.body.gpa};
 
-        db.close();
-      });
-    }
+        // Insert the student data into the database
+        collection.insert([student1], function (err, result){
+          if (err) {
+            console.log(err);
+          } else {
+
+            // Redirect to the updated student list
+            res.redirect("thelist");
+          }
+
+          // Close the database
+          db.close();
+        });
+
+      }
+    });
+
   });
-});
 
 module.exports = router;
