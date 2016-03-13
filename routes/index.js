@@ -37,4 +37,8 @@ router.get('/thelist', function(req, res){
   })
 });
 
+router.get('/newstudent', function(req,res){
+  res.render('newstudent', {title: 'Add student'});
+});
+
 module.exports = router;

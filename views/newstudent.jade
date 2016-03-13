@@ -1,0 +1,8 @@
+extends layout
+
+block content
+  h3= title
+  form#form_add_student(name="addstudent", method="post", action="/addstudent")
+    span Name
+    input#input_name(type="text", placeholder="student", name="student")
+    button#submit_student(type="submit") submit
