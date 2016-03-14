@@ -1,7 +1,7 @@
 #!/bin/sh
 # Command runner for NodeApp
 
-npm install -g express
-npm install -g express-generator
+npm install express
+npm install express-generator
 npm install
 DEBUG=nomon:* npm start

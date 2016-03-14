@@ -12,7 +12,8 @@ nodeapp:
 
 db:
   image: mvertes/alpine-mongo
+  command: [mongod, --dbpath, /data/db]
   ports:
-    - "27017:27017"
+    - "mongodb:27017:27017"
   volumes:
     - $PWD/data:/data/db
