@@ -1,19 +1,23 @@
-nodeapp:
-  image: mhart/alpine-node
-  entrypoint: ./entrypoint
-  ports:
-    - "3010:3000"
-  volumes:
-    - .:/app
-    - ./node_modules:/app/node_modules
-  working_dir: /app
-  links:
-    - "db:appdb"
+version: "2"
 
-db:
-  image: mvertes/alpine-mongo
-  command: [mongod, --dbpath, /data/db]
-  ports:
-    - "mongodb:27017:27017"
-  volumes:
-    - $PWD/data:/data/db
+services:
+  nodeapp:
+    image: mhart/alpine-node
+    entrypoint: ./entrypoint
+    ports:
+      - "3010:3000"
+    volumes:
+      - .:/app
+      - ./node_modules:/app/node_modules
+    working_dir: /app
+    depends_on:
+      - appdb
+
+  appdb:
+    image: mvertes/alpine-mongo
+    command: [mongod, --dbpath, /data/db]
+    ports:
+      - "mongodb:27017:27017"
+    volumes:
+      - $PWD/data:/data/db
+
