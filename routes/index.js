@@ -20,7 +20,7 @@ router.get('/thelist', function(req, res){
   var MongoClient = mongodb.MongoClient;
 
   // Define where the MongoDB server is
-  var url = 'mongodb://172.17.0.5:27017/nomon';
+  var url = 'mongodb://appdb:27017/nomon';
 
   // Connect to the server
   MongoClient.connect(url, function (err, db) {
